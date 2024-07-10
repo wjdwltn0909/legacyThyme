@@ -5,10 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
     <mvc:annotation-driven/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <!--
-      일반적인 스트링을 리턴했을때 어떠한 타입으로 할지 직접 객체를 지정하고 설정한다.
-      >> 스프링 부트로 설명하자면 prefix suffix 를 설정하는 것과 같다.
-    -->
+        <!--
+          일반적인 스트링을 리턴했을때 어떠한 타입으로 할지 직접 객체를 지정하고 설정한다.
+          >> 스프링 부트로 설명하자면 prefix suffix 를 설정하는 것과 같다.
+        -->
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>

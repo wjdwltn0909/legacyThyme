@@ -4,6 +4,6 @@
     <title>Title</title>
 </head>
 <body>
-    <h2>${data}</h2>
+    <h2>${list}</h2>
 </body>
 </html>

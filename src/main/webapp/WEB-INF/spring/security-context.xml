@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd
+       http://www.springframework.org/schema/mvc
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd"
+>
+    <mvc:annotation-driven/>
+    <security:http auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/board/showAll" access="hasRole('USER')"/>
+    </security:http>
+    <!--매니저는 권한을 -->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN"/>
+                <!-- 반드시 비밀번호를 암호화해야하는데 그냥 평문으로 넣을 때, noop 을 적어주게 된다. -->
+                <security:user name="a" password="{noop}a" authorities="ROLE_USER"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

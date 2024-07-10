@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
     <context:property-placeholder location="classpath:mybatis/config/database.properties"/>
+
     <!-- database 연결 시켜줄 data source 객체부터 만들어주기 -->
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
         <property name="driverClassName" value="${datasource.driver}"/>
         <property name="url" value="${datasource.url}"/>
         <property name="username" value="${datasource.username}"/>
         <property name="password" value="${datasource.password}"/>
+    </bean>
+
+    <!-- sessionFactoryBean 만들기-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+        <!-- 위에서 생성해놓은 dataSource 가져오기 ref => reference -->
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis/config/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mybatis/mappers/*Mapper.xml"/>
+    </bean>
+
+    <!-- 파라미터로 반드시 sqlSessionFactory 가 있어야 함. -->
+    <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
     </bean>
 </beans>
