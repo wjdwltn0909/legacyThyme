@@ -29,4 +29,6 @@
     <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
     </bean>
+    <bean id="webExpressionHandler"
+          class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
 </beans>

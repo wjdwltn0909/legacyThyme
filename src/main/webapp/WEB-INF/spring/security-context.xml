@@ -11,7 +11,8 @@
        http://www.springframework.org/schema/mvc
        https://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/context
-       https://www.springframework.org/schema/context/spring-context.xsd">
+       https://www.springframework.org/schema/context/spring-context.xsd"
+>
     <mvc:annotation-driven/>
     <!--
     service 폴더 안에 있는 service 객체들 끼기 서로 읽힐 수 있도록 해준다. IoC ( 제어의 역전 )
@@ -28,11 +29,11 @@
     <!-- <security:http pattern="/resources/**" security="none"/>-->
 
 
-    <security:http auto-config="true" use-expressions="true">
+    <security:http auto-config="true" pattern="/**" use-expressions="true">
         <!-- <security:csrf disabled="true"/> -->
         <security:intercept-url pattern="/" access="permitAll()"/>
         <security:intercept-url pattern="/user/**" access="permitAll()"/>
-        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS"/>
+        <security:intercept-url pattern="/favicon.ico" access="hasRole('ROLE_ANONYMOUS')"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
         <security:intercept-url pattern="/board/**" access="isAuthenticated()"/>
         <!-- access="hasRole('USER')" => user 에게 권한을 줌 -->
@@ -55,6 +56,16 @@
             logout-success-url="/"
             delete-cookies="JSESSIONID"
         />
+        <!--
+        token-validity-seconds :  초당 기억하고 있는 매서드
+        data-source-ref : bean 에 있는 datasource 의 연결을 도움..?
+        after-launched 속성을 체크 아웃 시켜야 한다.
+        -->
+        <security:remember-me
+            token-validity-seconds="604800"
+            data-source-ref="dataSource"
+        />
+
     </security:http>
 
     <!-- 매니저 권한을 -->

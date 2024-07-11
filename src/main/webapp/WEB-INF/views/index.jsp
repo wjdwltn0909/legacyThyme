@@ -15,6 +15,12 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </div>
     <div>
+        <%-- checkbox로 자동 로그인 설정 만들기 --%>
+        <label for="remember-me">자동 로그인</label>
+        <input type="checkbox" value="true" name="remember-me" id="remember-me">
+    </div>
+
+    <div>
         <input type="submit" value="로그인">
     </div>
     <div>
