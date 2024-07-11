@@ -25,7 +25,7 @@ public class HomeController {
     @GetMapping("/board/showAll")
     public String showAll(Model model) {
         model.addAttribute("list","showAll 에 도착");
-        return "index";
+        return "board/showAll";
     }
 
 

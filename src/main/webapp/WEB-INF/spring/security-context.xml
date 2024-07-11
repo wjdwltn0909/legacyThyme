@@ -3,15 +3,23 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd
        http://www.springframework.org/schema/mvc
-       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd">
     <mvc:annotation-driven/>
+    <!--
+    service 폴더 안에 있는 service 객체들 끼기 서로 읽힐 수 있도록 해준다. IoC ( 제어의 역전 )
+    자바코드로 선언한 폴더를 xml 코드에서 사용하게 될때
+    java security 에서는 한 번 더 읽히도록 해주어야 한다.
+    -->
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-    <bean id="customDetailService" class="com.nc13.spring_legacy.service.CustomDetailService"/>
+    <context:component-scan base-package="com.nc13.spring_legacy.service"/>
 
     <!--logIn이 안됨. => 곧장 DB 연결함 -->
     <!-- security 를 설정할때에는 파일 아래로 갈 수록 범용적인 권한설정을 해주어야 한다.-->
@@ -19,29 +27,35 @@
     <!-- <security:http pattern="*.ico" security="none"/>-->
     <!-- <security:http pattern="/resources/**" security="none"/>-->
 
-    <security:http auto-config="true" use-expressions="true">
 
+    <security:http auto-config="true" use-expressions="true">
+        <!-- <security:csrf disabled="true"/> -->
         <security:intercept-url pattern="/" access="permitAll()"/>
-        <security:intercept-url pattern="*.ico" access="permitAll()"/>
+        <security:intercept-url pattern="/user/**" access="permitAll()"/>
+        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
-        <security:intercept-url pattern="/board/showAll" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/board/**" access="isAuthenticated()"/>
         <!-- access="hasRole('USER')" => user 에게 권한을 줌 -->
         <security:form-login
                 login-page="/"
                 login-processing-url="/user/auth"
                 username-parameter="username"
                 password-parameter="password"
-                authentication-success-forward-url="/board/showAll"
-                authentication-failure-forward-url="/"
+                default-target-url="/board/showAll"
         />
-
+        <!--
+            authentication-success-forward-url="/"
+            authentication-success-Handler-ref="authHandler"
+            로그인이 성공이 됐을때 자동으로 다른 부분을 실행시킬 수 있는 핸들러이다.
+            핸들러가 서블릿의 일종이다.
+            서블릿은 동적 웹 페이지를 만들기 위한 서버 개념이다 .
+        -->
         <security:logout
             logout-url="/logOut"
             logout-success-url="/"
+            delete-cookies="JSESSIONID"
         />
-
     </security:http>
-
 
     <!-- 매니저 권한을 -->
     <security:authentication-manager>
@@ -50,8 +64,7 @@
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
-
-       <!--
+        <!--
         <security:authentication-provider>
             <security:user-service>
                 <security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN"/>

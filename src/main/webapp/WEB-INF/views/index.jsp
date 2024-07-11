@@ -12,6 +12,7 @@
     <div>
         <label for="password">비밀번호</label>
         <input type="password" name="password" id="password">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </div>
     <div>
         <input type="submit" value="로그인">
