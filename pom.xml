@@ -50,6 +50,7 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -57,12 +58,14 @@
             <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- spring-security-web -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>6.3.1</version>
         </dependency>
+
         <!-- spring-security-config -->
         <dependency>
             <groupId>org.springframework.security</groupId>
