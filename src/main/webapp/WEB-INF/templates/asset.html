@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<body>
+<div th:fragment="header">
+    <div id="row-header">
+<img th:src="@{/images/luffy_rice.jpeg}" height="45px" alt="루피밥">
+        <span th:text="|${user}회원님 환영합니다.|"></span>
+        <a th:href="@{/board/write}" th:text="'글 작성하기'"></a>
+        <a th:href="@{/user/logOut}" th:text="'로그아웃'"></a>
+    </div>
+</div>
+<div th:fragment="footer">
+    <div class="row"
+         style="height: 100px; background-color: tomato; text-align: center; font-size: medium; color: white">
+        <span>정지수가 만듦</span>
+    </div>
+</div>
+</body>
+</html>

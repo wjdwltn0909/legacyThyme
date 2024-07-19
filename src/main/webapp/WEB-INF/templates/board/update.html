@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${boardDTO.id} + '번 게시글 수정하기'">게시글 수정하기</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+
+</head>
+<body>
+<div>
+    <form th:action="@{/board/update/{id}(id=*{id})}" th:object="${boardDTO}" method="post">
+        <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" th:field="*{title}">
+        </div>
+        <div>
+            <label for="content">내용</label>
+            <input type="text"  id="content" th:field="*{content}">
+        </div>
+        <input type="submit" class="btn btn-outline-primary" value="수정하기">
+        <a class="btn btn-outline-danger" th:href="@{/board/showOne/{id}(id=*{id})}">취소하기</a>
+    </form>
+</div>
+</body>`
+</html>

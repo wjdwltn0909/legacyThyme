@@ -10,17 +10,26 @@
        http://www.springframework.org/schema/context
        https://www.springframework.org/schema/context/spring-context.xsd">
     <mvc:annotation-driven/>
-    <!-- InternalResourceViewResolver ??-->
-    <!--  thymeleaf 를 설정하기 위해서 html로 옮기는 중   jsp 설정이기 때문에 template 에서 html 을 불러오기 위해 잠깐 주석처리함.
-   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        &lt;!&ndash;
-          일반적인 스트링을 리턴했을때 어떠한 타입으로 할지 직접 객체를 지정하고 설정한다.
+
+    <!-- Configure static resource handling -->
+    <mvc:resources mapping="/css/**" location="/resources/static/css/" />
+    <mvc:resources mapping="/images/**" location="/resources/static/images/" />
+    <mvc:resources mapping="/js/**" location="/resources/static/js/" />
+    <!--
+    InternalResourceViewResolver
+     - 컨트롤러가 반환하는 논리적인 뷰 이름을 실제 물리적인 뷰 리소스(HTML, CSS) 로 변환하는 역할을 한다.
+    JSP 와 같은 내부 리소스를 뷰로 사용할 때 사용됩니다.
+    -->
+    <!--
+    thymeleaf 를 설정하기 위해서 html 로 옮기는 중   jsp 설정이기 때문에 template 에서 html 을 불러오기 위해 잠깐 주석처리함.
+    일반적인 스트링을 리턴했을때 어떠한 타입으로 할지 직접 객체를 지정하고 설정한다.
           >> 스프링 부트로 설명하자면 prefix suffix 를 설정하는 것과 같다.
-        &ndash;&gt;
+   -->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>
-    -->
+    </bean>-->
+
 
     <bean id="templateResolver" class="org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/templates/"/>
@@ -30,10 +39,12 @@
     <bean id="templateEngine" class="org.thymeleaf.spring6.SpringTemplateEngine">
         <property name="templateResolver" ref="templateResolver"/>
     </bean>
+
     <bean class="org.thymeleaf.spring6.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine"/>
         <property name="contentType" value="text/html"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
+
     <context:component-scan base-package="com.nc13.spring_legacy"/>
 </beans>

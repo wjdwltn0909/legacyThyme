@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.ReplyMapper">
+
+    <!-- 클래스 이름을 정확하게 기입해야한다.=> 우리가 패키지 단위로 기입하기 때문에 -->
+    <select id="selectAll" parameterType="int" resultType="ReplyDTO">
+        SELECT * FROM reply
+        INNER JOIN user
+        ON reply.writer_id = user.id
+        WHERE board_id = #{boardId}
+        ORDER BY reply.id ASC
+    </select>
+
+
+</mapper>

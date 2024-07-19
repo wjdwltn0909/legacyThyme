@@ -11,5 +11,27 @@
         ON board.writer_id = user.id
     </select>
 
+    <select id="selectOne" parameterType="int" resultType="BoardDTO">
+        SELECT * FROM board
+        INNER JOIN user
+        ON board.writer_id = user.id
+        WHERE board.id = #{id}
+    </select>
 
+    <insert id="insert" parameterType="BoardDTO">
+        INSERT INTO board(title, content, writer_id)
+        VALUES (#{title}, #{content}, #{writerId})
+    </insert>
+
+    <update id="update" parameterType="BoardDTO">
+        UPDATE board
+        SET title = #{title},
+            content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM board
+        WHERE board.id = #{id}
+    </delete>
 </mapper>
